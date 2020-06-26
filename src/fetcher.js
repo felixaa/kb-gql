@@ -5,7 +5,7 @@ import { objByString } from './utils';
 let queries = {};
 let debounce = null;
 
-const queueRequest = (dispatch, key, query, extractor) => {
+const queueRequest = (dispatch, key, query, extractor, queryOptions = {}) => {
     clearTimeout(debounce);
 
     queries[key] = {
@@ -13,10 +13,10 @@ const queueRequest = (dispatch, key, query, extractor) => {
         extractor
     };
 
-    debounce = setTimeout(() => requestBatch(dispatch), options.delay);
+    debounce = setTimeout(() => requestBatch(dispatch, queryOptions), options.delay);
 };
 
-const requestBatch = async dispatch => {
+const requestBatch = async (dispatch, queryOptions = {}) => {
     if (options.debug)
         console.log('-- graph-request starting request:', queries);
 

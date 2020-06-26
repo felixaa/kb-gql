@@ -8,7 +8,7 @@ const { Provider } = store;
 
 export let options = {
     delay: 50,
-    debug: false,
+    debug: true,
     graphqlUrl: ''
 };
 

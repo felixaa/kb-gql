@@ -9,13 +9,13 @@ import queueRequest from './fetcher';
  * @param extractor
  * @returns {*}
  */
-const useRequest = (query, key, extractor) => {
+const useRequest = ({ query, key = window.location.pathname, extractor, queryOptions = {}}) => {
+
     const { dispatch, state } = useContext(store);
 
-    key = key || window.location.pathname;
-
     useEffect(() => {
-        if (!state[key]) queueRequest(dispatch, key, query, extractor);
+        if (queryOptions.forceFetch) queueRequest(dispatch, key, query, extractor, queryOptions);
+        if (!state[key]) queueRequest(dispatch, key, query, extractor, queryOptions);
         if (state[key] && options.debug)
             console.log(`-- graphql-request ${key} found in cache!`);
     }, [query]);
